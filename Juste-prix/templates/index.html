@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Juste Prix</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <h1>Juste Prix</h1>
+      <div class="meta">
+        Jeu de devinette<br>
+        {% if etat %}
+          1 – {{ etat.max_val }}
+        {% else %}
+          v1.0
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-body">
+
+      {% if afficher_config %}
+      <div class="message-box">
+        Configure ta partie, puis démarre.
+      </div>
+
+      <form class="config-form" method="POST">
+        <input type="hidden" name="configurer" value="1">
+        <div class="config-grid">
+          <div class="config-field">
+            <label for="vies">Nombre de vies</label>
+            <select id="vies" name="vies">
+              <option value="1">1 vie</option>
+              <option value="5">5 vies</option>
+              <option value="10" selected>10 vies</option>
+              <option value="15">15 vies</option>
+            </select>
+          </div>
+          <div class="config-field">
+            <label for="max_val">Plage de nombres</label>
+            <select id="max_val" name="max_val">
+              <option value="50">1 à 50</option>
+              <option value="100" selected>1 à 100</option>
+              <option value="500">1 à 500</option>
+              <option value="1000">1 à 1000</option>
+              <option value="5000">1 à 5000</option>
+              <option value="10000">1 à 10000</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn" type="submit">Démarrer</button>
+      </form>
+
+      {% else %}
+      <div class="message-box {% if fini and gagne %}win{% elif fini and not gagne %}lose{% endif %}">
+        {{ message }}
+      </div>
+
+      {% if etat %}
+      <div class="vies-section">
+        <span class="vies-label">Vies restantes — {{ etat.limite_max - etat.essaie }} / {{ etat.limite_max }}</span>
+        <div class="vies-dots">
+          {% for i in range(etat.limite_max) %}
+            <span class="{% if i < (etat.limite_max - etat.essaie) %}active{% endif %}"></span>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-item">
+          <span class="label">Score</span>
+          <span class="value">{{ etat.score }}</span>
+        </div>
+        <div class="score-item">
+          <span class="label">Essais</span>
+          <span class="value">{{ etat.essaie }}</span>
+        </div>
+        {% if meilleur_score is not none %}
+        <div class="score-item">
+          <span class="label">Record</span>
+          <span class="value">{{ meilleur_score }}</span>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if not fini %}
+      <form class="guess-form" method="POST">
+        <div class="guess-input-wrap">
+          <input type="number" name="guess" min="1" max="{{ etat.max_val }}" placeholder="?" autofocus required>
+        </div>
+        <button class="btn" type="submit">Proposer</button>
+      </form>
+      {% else %}
+      <form method="POST">
+        <input type="hidden" name="rejouer" value="1">
+        <button class="btn" type="submit">Nouvelle partie</button>
+      </form>
+      {% endif %}
+
+      {% if etat.historique %}
+      <div class="historique">
+        <div class="historique-header">Historique des essais</div>
+        {% for h in etat.historique | reverse %}
+        <div class="historique-row">
+          <span class="num">{{ h.guess }}</span>
+          {% if h.statut == 'plus' %}<span class="dir">Trop petit</span> <span class="arrow">↑</span>
+          {% elif h.statut == 'moins' %}<span class="dir">Trop grand</span> <span class="arrow">↓</span>
+          {% elif h.statut == 'gagne' %}<span class="dir">Correct !</span> <span class="arrow">✓</span>
+          {% else %}<span class="dir">Dernier essai</span> <span class="arrow">✗</span>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% endif %}
+      {% endif %}
+    </div>
+
+    <div class="card-footer">
+      {% if meilleur_score is not none %}
+        <span>Record : {{ meilleur_score }} pts</span>
+      {% endif %}
+    </div>
+  </div>
+
+</body>
+</html>
