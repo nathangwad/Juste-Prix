@@ -2,10 +2,6 @@
 
 Un jeu de devinette web en Python / Flask. Trouve un nombre aléatoire en un minimum d'essais — avant d'épuiser toutes tes vies.
 
-![Python](https://img.shields.io/badge/Python-3.x-blue?style=flat-square)
-![Flask](https://img.shields.io/badge/Flask-3.x-lightgrey?style=flat-square)
-![Licence](https://img.shields.io/badge/Licence-MIT-green?style=flat-square)
-
 ---
 
 ## Aperçu
