@@ -1,4 +1,4 @@
-# Le Juste Prix 🎯
+# Le Juste Prix 
 
 Un jeu de devinette web en Python / Flask. Trouve un nombre aléatoire en un minimum d'essais — avant d'épuiser toutes tes vies.
 
@@ -14,7 +14,7 @@ Un jeu de devinette web en Python / Flask. Trouve un nombre aléatoire en un min
 
 ## Fonctionnalités
 
-- **Configurable** : choix du nombre de vies (5 / 10 / 15) et de la plage (1–50, 1–100, 1–500, 1–1000).
+- **Configurable** : choix du nombre de vies ( 1/ 5 / 10 / 15) et de la plage (1–50, 1–100, 1–500, 1–1000, 1-5000, 1-10000).
 - **Score dynamique** : commence à 2000 pts, perd 100 pts à chaque essai raté. Plancher à 0.
 - **Record de session** : le meilleur score est conservé tant que le navigateur reste ouvert.
 - **Historique des essais** : chaque proposition est listée avec sa direction (↑ trop petit / ↓ trop grand).
@@ -65,7 +65,7 @@ juste-prix/
 ├── route.py            # Application Flask : routes, sessions, logique HTTP
 ├── price.py            # Logique métier : nouvelle_partie(), verifier_guess()
 ├── static/
-│   └── style.css       # Feuille de style (séparée du HTML)
+│   └── style.css       
 ├── templates/
 │   └── index.html      # Interface Jinja2
 └── README.md
@@ -97,33 +97,9 @@ Un **record de session** est affiché en permanence. Bats ton propre score !
 
 ---
 
-## Sécurité (avant de déployer)
-
-La `secret_key` présente dans `route.py` est un placeholder. Avant tout déploiement :
-
-```python
-# route.py
-import os
-app.secret_key = os.environ.get('SECRET_KEY', 'change-moi')
-```
-
-Puis définis la variable d'environnement :
-
-```bash
-export SECRET_KEY="une-chaine-aleatoire-longue-et-secrete"
-```
-
----
-
 ## Idées d'améliorations
 
 - [ ] Leaderboard persistant (base de données SQLite)
 - [ ] Mode multijoueur en temps réel (WebSockets)
 - [ ] Niveau de difficulté "chrono" avec timer
 - [ ] Internationalisation (i18n) EN / FR / ES
-
----
-
-## Licence
-
-MIT — libre d'utilisation, de modification et de distribution.
