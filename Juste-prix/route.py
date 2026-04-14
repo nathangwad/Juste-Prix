@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, session
 from price import nouvelle_partie, verifier_guess
 
 app = Flask(__name__)
-app.secret_key = 'change-moi-en-production'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
