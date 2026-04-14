@@ -34,7 +34,7 @@ Un jeu de devinette web en Python / Flask. Trouve un nombre aléatoire en un min
 
 ```bash
 # 1. Cloner le dépôt
-git clone https://github.com/<ton-pseudo>/juste-prix.git
+git clone https://github.com/nathangwad/juste-prix.git
 cd juste-prix
 
 # 2. (Recommandé) Créer un environnement virtuel
